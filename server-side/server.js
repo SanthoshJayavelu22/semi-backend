@@ -15,6 +15,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://www.semi.org.in",
   "https://semi.org.in",
+  "https://backend.semi.org.in",
 ];
 
 const corsOptions = {
@@ -41,13 +42,18 @@ const corsOptions = {
 };
 
 // Enable CORS for all routes including preflight
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 // --- Middleware ---
 // Special handling for Stripe Webhook (must be before express.json)
 // app.use("/payment/webhook", express.raw({ type: "application/json" }), require("./controllers/paymentController").handleWebhook);
 
-app.use(express.json());
+// Increase payload size limits for file uploads
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
   
    
