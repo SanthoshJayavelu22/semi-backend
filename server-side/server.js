@@ -13,16 +13,29 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
+  "https://www.semi.org.in",
+  "https://semi.org.in",
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+    if (!origin) return callback(null, true);
+
+    // Allow explicit allowed origins
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    // Allow any subdomain of semi.org.in (e.g., https://app.semi.org.in)
+    try {
+      const hostname = new URL(origin).hostname;
+      if (hostname === 'semi.org.in' || hostname.endsWith('.semi.org.in')) {
+        return callback(null, true);
+      }
+    } catch (err) {
+      // fall through to reject
     }
+
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
 };
