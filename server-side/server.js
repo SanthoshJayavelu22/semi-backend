@@ -48,12 +48,12 @@ mongoose
   .catch((err) => {
     console.error("❌ DB connection error:", err);
   });
-
+   
 // --- Routes ---
 app.use('/api/membership', require('./routes/membershipRoutes'));
 app.use('/api/newsletter', require('./routes/newsletterRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
-
+     
 // Serve static files from uploads folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

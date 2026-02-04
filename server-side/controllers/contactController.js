@@ -13,7 +13,7 @@ exports.submitContactForm = asyncHandler(async (req, res) => {
   try {
     // 1. Send Email to Admin/Head Office
     await sendEmail({
-      to: process.env.EMAIL_USER, // Send to self/admin for testing
+      to: process.env.ADMIN_EMAILS,
       subject: `New Contact Inquiry: ${subject}`,
       html: getAdminEmailTemplate({ name, email, phone, subject, message }),
     });

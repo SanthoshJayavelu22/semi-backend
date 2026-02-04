@@ -15,6 +15,9 @@ const sendEmail = async (options) => {
       user: user,
       pass: pass,
     },
+    tls: {
+      rejectUnauthorized: false
+    }
   });
 
   const mailOptions = {

@@ -42,6 +42,9 @@ exports.createMembership = asyncHandler(async (req, res) => {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     // --- Premium Email Design V4 (Elegant) ---
@@ -174,7 +177,7 @@ exports.createMembership = asyncHandler(async (req, res) => {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // Send to self
+      to: process.env.ADMIN_EMAILS, 
       subject: 'New Membership Application Submission',
       html: emailBody,
       attachments: attachments,
