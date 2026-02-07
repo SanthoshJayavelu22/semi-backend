@@ -184,12 +184,22 @@ exports.createMembership = asyncHandler(async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully');
+    console.log('Admin notification email sent successfully');
+
+    // --- Send Confirmation Email to Registrant ---
+    const { getMembershipConfirmationTemplate } = require('../utils/emailTemplates');
+    const userMailOptions = {
+      from: process.env.EMAIL_USER,
+      to: formData.email,
+      subject: 'Application Received - Society for Emergency Medicine India',
+      html: getMembershipConfirmationTemplate(formData.fullName),
+    };
+
+    await transporter.sendMail(userMailOptions);
+    console.log('User confirmation email sent successfully');
 
   } catch (emailError) {
     console.error('Error sending email:', emailError);
-    // Email failed but user already got success response. 
-    // Ideally we might want to log this to a monitoring service.
   }
 });
 

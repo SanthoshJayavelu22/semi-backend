@@ -70,4 +70,45 @@ const getUserAutoReplyTemplate = (name, subject) => `
 </html>
 `;
 
-module.exports = { getAdminEmailTemplate, getUserAutoReplyTemplate };
+const getMembershipConfirmationTemplate = (name) => `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .wrapper { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
+    .card { background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; }
+    .header { background-color: #2563eb; padding: 32px 40px; text-align: center; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 24px; font-weight: 600; }
+    .content { padding: 40px; color: #1e293b; line-height: 1.6; }
+    .greeting { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+    .status-badge { display: inline-block; background-color: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 9999px; font-size: 14px; font-weight: 600; margin-bottom: 24px; }
+    .footer { background-color: #f8fafc; padding: 24px; text-align: center; color: #64748b; font-size: 13px; border-top: 1px solid #e2e8f0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="header">
+        <h1>Membership Application Received</h1>
+      </div>
+      <div class="content">
+        <div class="greeting">Dear ${name},</div>
+        <div class="status-badge">Application Status: Pending Review</div>
+        <p>Thank you for applying for membership with the <strong>Society for Emergency Medicine India (SEMI)</strong>.</p>
+        <p>We have successfully received your application and the uploaded documents. Our membership committee will now review your submission.</p>
+        <p>You will receive another update once your membership is approved. This process typically takes 3-5 working days.</p>
+        <p>If you have any questions in the meantime, please feel free to contact us.</p>
+        <p>Best Regards,<br><strong>SEMI Membership Team</strong></p>
+      </div>
+      <div class="footer">
+        &copy; ${new Date().getFullYear()} Society for Emergency Medicine India. All rights reserved.<br>
+        <a href="https://semi.org.in" style="color: #2563eb; text-decoration: none;">www.semi.org.in</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+module.exports = { getAdminEmailTemplate, getUserAutoReplyTemplate, getMembershipConfirmationTemplate };
