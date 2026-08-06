@@ -5,3 +5,4 @@ dist/
 build/
 server/uploads/
 uploads/
+*.log
