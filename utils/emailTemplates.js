@@ -112,7 +112,7 @@ const getMembershipConfirmationTemplate = (name) => `
 `;
 
 const getMembershipApprovalTemplate = (name, paymentLink, customMessage) => {
-  const logoCid = 'logo';
+  const logoCid = 'https://www.semi.org.in/assets/semi%20logo-D0JY8eCV.png';
   return `
 <!DOCTYPE html>
 <html>
