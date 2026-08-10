@@ -49,6 +49,8 @@ const getMembershipApprovedNoPaymentTemplate = (name, customMessage) => {
 
                 <p>Welcome to the SEMI family!</p>
                 <p>Best Regards,<br><strong>SEMI Membership Team</strong></p>
+
+                <p style="font-size: 12px; color: #64748b;">This is an auto-generated email. If you have already received this email, please ignore it.</p>
               </div>
             </td>
           </tr>

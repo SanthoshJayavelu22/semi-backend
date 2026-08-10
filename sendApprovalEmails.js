@@ -44,6 +44,35 @@ const DELAY_MAX_MS = parseInt(process.env.DELAY_MAX_MS, 10) || 15000;
 const MAX_EMAILS_PER_RUN = parseInt(process.env.MAX_EMAILS_PER_RUN, 10) || 100;
 const SUBJECT = process.env.APPROVAL_EMAIL_SUBJECT || 'Membership Application Approved - SEMI';
 
+// Emails already successfully mailed (from the previous run). These are
+// skipped so nobody gets a duplicate mail.
+const ALREADY_EMAILED = [
+  'smrutitaware2024@gmail.com',
+  'anitha.silvery@gmail.com',
+  'dr.abhisheksinghkshatri@gmail.com',
+  'drmadan93@gmail.com',
+  'dr.sornajaa@outlook.com',
+  'dr.silvery.anith@esic.gov.in',
+  'VIVEKRABADIYA89@GMAIL.COM',
+  'sabarirajant16@gmail.com',
+  'libania95@gmail.com',
+  'aamirbadar@gmail.com',
+  'dr.ranadeepg@gmail.com',
+  'michellelionel@gmail.com',
+  'shivachandran181294@gmail.com',
+  'Nitin.Jagasia@uhs.nhs.uk',
+  'shravan.surgeon@gmail.com',
+  'doctor.tirthankar@gmail.com',
+  'ankur@intensivist.com',
+  'shivavarun505@gmail.com',
+  'smrutihnair@gmail.com',
+  'drdeepu.goarla@gmail.com',
+  'benbabu63@gmail.com',
+  'DRUMARMATHEEN@GMAIL.COM',
+  'umarazmed@gmail.com',
+  'adarshwilson7007@gmail.com',
+];
+
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com';
 const SMTP_PORT = parseInt(process.env.SMTP_PORT, 10) || 587;
 const SMTP_USER = process.env.SMTP_USER || process.env.EMAIL_USER;
@@ -102,11 +131,12 @@ async function main() {
   const pending = await Membership.find({
     status: 'approved',
     approvalEmailSent: { $ne: true },
+    email: { $nin: ALREADY_EMAILED },
   }).lean();
 
   const alreadySent = await Membership.countDocuments({ approvalEmailSent: true });
 
-  log(`Approved students found: ${pending.length} | already emailed before: ${alreadySent}`);
+  log(`Approved students found: ${pending.length} | already emailed before: ${alreadySent} | skipped by hardcoded list: ${ALREADY_EMAILED.length}`);
   log(`Will process up to: ${MAX_EMAILS_PER_RUN} this run | dry-run mode: ${DRY_RUN ? 'YES' : 'NO'}`);
   log(`Delay between mails: ${DELAY_MIN_MS}-${DELAY_MAX_MS}ms`);
 
