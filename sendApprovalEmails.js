@@ -13,7 +13,7 @@
  * Google "abnormal activity" safety:
  *   - Uses Gmail SMTP with STARTTLS (port 587)
  *   - Sends strictly one at a time (sequential)
- *   - Waits a RANDOM delay (default 8-15s) between emails
+ *   - Waits a RANDOM delay (default 3-3.5 mins) between emails
  *   - Rate cap per run so you stay well under Gmail limits
  *   - Stops safely on repeated failures and lets you resume later
  *
@@ -22,8 +22,8 @@
  *   node sendApprovalEmails.js --dry-run           # preview only, no mails
  *
  * Optional env vars (add to .env or pass inline):
- *   DELAY_MIN_MS=8000
- *   DELAY_MAX_MS=15000
+ *   DELAY_MIN_MS=180000
+ *   DELAY_MAX_MS=210000
  *   MAX_EMAILS_PER_RUN=100
  *   APPROVAL_EMAIL_SUBJECT="Your SEMI Membership is Approved"
  */
@@ -39,8 +39,8 @@ const { getMembershipApprovedNoPaymentTemplate } = require('./utils/emailTemplat
 // ---------------------------------------------------------------
 const DRY_RUN = process.argv.includes('--dry-run');
 
-const DELAY_MIN_MS = parseInt(process.env.DELAY_MIN_MS, 10) || 8000;
-const DELAY_MAX_MS = parseInt(process.env.DELAY_MAX_MS, 10) || 15000;
+const DELAY_MIN_MS = parseInt(process.env.DELAY_MIN_MS, 10) || 180000; // 3 minutes
+const DELAY_MAX_MS = parseInt(process.env.DELAY_MAX_MS, 10) || 210000; // 3.5 minutes
 const MAX_EMAILS_PER_RUN = parseInt(process.env.MAX_EMAILS_PER_RUN, 10) || 100;
 const SUBJECT = process.env.APPROVAL_EMAIL_SUBJECT || 'Membership Application Approved - SEMI';
 
